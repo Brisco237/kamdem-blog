@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'articles/articlesdetails.css' %}">
+{% block title %} Articles Details {% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid col-lg-11 col-sm-11 box1">
+    <div class="row">
+        <div class="col-lg-12">
+            {% if messages %}
+                {% for message in messages %}
+                    <h5 class="alert alert-success">{{ message }}</h5>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="mt-2">
+        <div class="row box2">
+            <div class="col-lg-12">
+                <p class="category">Category <span>.</span> {{ articles.category }}</p>
+                <h1 class="title">{{ articles.title }}</h1>
+                <p class="desc">Publié par <i class="fas fa-circle-user"></i> {{ articles.author }} le <i class="fas fa-calendar"></i> {{ articles.date }} a <i class="fas fa-clock"></i> {{ articles.time }}</p>
+                <br>
+                <img src="{{ articles.image.url }}" alt="Image Description">
+            </div>
+        </div>
+        <br>
+        <div class="row box3">
+            <div class="col-lg-12 mb-3">
+                <p>{{ articles.content|safe }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt-4">
+    <div class="col-lg-12">
+        <!--section design commentaire Custom -->
+        <div class="container-fluid mt-5 box4">
+            <div class="col-lg-8">
+                <h4>Commentaires <i class="fas fa-message"></i></h4>
+                <hr>
+                <br>
+                {% for commentaire in commentaires %}
+                <div class="commentaire">
+                    <p class="auteur"><i class="fas fa-circle-user"></i> {{ commentaire.author }}</p>
+                    <p class="datetime">{{ commentaire.date_add }}</p>
+                    <p class="content">{{ commentaire.content }}</p>
+                    <hr>
+                {% empty %}
+                    <p class="empty">Aucun commentaires pour le moment...</p>
+                    <hr>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row mb-3 mt-4">
+                <div class="col-lg-12 .box4">
+                    <h4>Ajouter un Commentaire</h4>
+                </div>
+            </div>
+            <div class="row textarea">
+                <div class="col-lg-12">
+                    <form action="." method="POST">
+                        {% csrf_token %}
+                        <textarea name="commentaire" rows="4" placeholder="Ecrivez votre commentaire Ici..."></textarea><br>
+                        <button type="submit" class="btn mt-2">Poster le commentaire</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br>
+</div>
+
+<style>
+    /* custom title */
+    body {
+        background-color: rgb(238, 235, 235);
+    }
+    body .box1{
+        padding-left:20px;
+        padding-right:20px;
+        margin-left:10px;
+        margin-right:10px;
+        margin-top: 20px;
+        box-sizing: border-box;
+        background-color: #fff;
+    }
+    body .box2 .category{
+        font-size: 1rem;
+        text-transform: uppercase;
+        color: gray;
+        font-family: 'Poppins';
+    }
+
+    body .box2 span{
+        font-size: 3rem;
+        color: gray;
+    }
+
+    body .box2 .title{
+        text-transform: uppercase;
+        font-family: 'Poppins';
+        font-weight: bold;
+    }
+    body .box2 .desc{
+        font-family: 'Poppins';
+        color: gray;
+        font-size: 0.8rem;
+    }
+    body .box2 img{
+        padding-right: 0px;
+        height: 500px;
+        width:80%;
+    }
+    body .box2 .desc-image{
+        font-family: 'Montserrat';
+        font-size: 0.8rem;
+        color: gray;
+    }
+    body .box1 .box3 p{
+        margin-left: 10px;
+        padding: 7px;
+        font-family: 'Poppins';
+    }
+    body .box4 h4{
+        font-weight: bold;
+        font-size: 2rem;
+    }
+    body .box4 .empty{
+        font-family: 'Poppins';
+    }
+    /* Custom comment section */
+    .textarea form textarea{
+        font-family: 'Poppins';
+        width: 450px;
+        padding: 10px;
+        outline: none;
+    }
+    .textarea form button{
+        font-family: 'Poppins';
+        border: 1px solid black;
+        padding: 10px;
+        background-color: #343a40;
+        color: #fff;
+        border: none;
+    }
+    .textarea form button:hover{
+        color: black;
+        background: #fff;
+        border: 2px solid black;
+        transition: 1s;
+    }
+
+    /* Custom section commentaire ajouter par les user */
+    .box4 .commentaire .auteur{
+        font-size: 1.2rem;
+        font-family: 'Inknut Antiqua';
+        font-weight: bold;
+
+    }
+    .box4 .commentaire .datetime{
+        font-family: 'Poppins';
+        color: gray;
+        margin-top: 1px;
+        font-size: 13px;
+    }
+    .box4 .commentaire .content{
+        font-family:'Poppins';
+        letter-spacing: 1px;
+    }
+    body .box4 .commentaire p{
+        font-family: 'Poppins';
+    }
+</style>
+
+{% endblock content %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'book/booksdetails.css' %}">
+{% block title %} Books Details {% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid box mb-5">
+    <div class="row mt-5 box1 container-fluid">
+        <p class="category">Category > {{ books.category }}</p>
+        <br><br><br>
+        <div class="col-lg-4 col-sm-6 covertpage mb-5">
+            <img src="{{ books.covert_page.url }}" class="card-img-top" alt="Image Description" style="width: 280px; height:400px;">
+        </div>
+        <div class="col-lg-8 col-sm-6 aboutbook">
+            <h1 class="card-title">{{ books.title }}</h1>
+            <p class="auth">Par {{ books.author }} (Auteur)</p>
+            <hr>
+            <br>
+            <div class="card-text" style="font-family: 'Poppins';">
+                <p>{{ books.synopsis|safe }}</p>
+            </div>
+            <br>
+            {% if books.file %}
+                <!--<a href="{{ books.file.url }}" download><button class="btn">Télecharger le PDF</button></a>-->
+                <br><br>
+            {% else %}
+                <h5><i class="fas fa-triangle-exclamation"></i>Désolé mais le PDF n'est pas encore disponible pour le téléchargement...</h5>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mt-1 mb-5">
+        <div class="col-sm-9">
+            <iframe 
+                src="{% static 'pdfjs/web/viewer.html' %}?file={{ books.file.url|urlencode }}" 
+                width="100%" 
+                height="500px" 
+                style="border: none;">
+            </iframe>
+        </div>
+        <div class="col-lg-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Titre : {{ books.title }}</h5>
+                    <br>
+                    <h6 class="card-title">Auteur : {{ books.author }}</h6>
+                </div>
+            </div>       
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* covert page custom */
+    body{
+        background-color: rgb(238, 235, 235);
+    }
+    body .box{
+        background-color: #fff;
+        border-left: 50px solid black;
+        border-right:10px solid black;
+        border-bottom: 10px solid black;
+    }
+    body .box .box1{
+        width:87vw;
+    }
+    body .category{
+        font-size: 1rem;
+        font-family: 'Poppins';
+        text-transform: uppercase;
+        margin-top:19px;
+        color: gray;
+    }
+    /* about book custom */
+    body .card-title{
+        font-family: 'Montserrat';
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .aboutbook .auth{
+        font-family: 'Poppins';
+        font-size: 0.9rem;
+        color: gray;
+    }
+    /* button custom */
+    body .btn{
+        height: 50px;
+        font-family: 'Poppins';
+        font-weight: bold;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    body .btn:hover{
+        background-color: #343a40;
+        color: #fff;
+        border: none;
+        transition: 1s;
+    }
+</style>
+
+{% endblock content %}

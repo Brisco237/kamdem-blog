@@ -1,0 +1,20 @@
+# Environnement virtuel
+env/
+.venv/
+
+# Fichiers Python compilés
+__pycache__/
+*.pyc
+
+# Base de données locale
+db.sqlite3
+
+# Dossiers Django spécifiques
+media/
+staticfiles/
+
+# Fichiers système
+*.log
+*.swp
+.DS_Store
+Thumbs.db

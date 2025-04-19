@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Page Not Found(error 404) {% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <h1>Error 404</h1>
+            <br>
+            <br><br>
+            <p>Page Not Found</p>
+            <button class="btn btn-danger"><a href="{% url 'home' %}">Back To Home Page</a></button>
+        </div>
+    </div>
+</div>
+{% endblok content %}
+
+<style>
+    body{
+        font-family: 'Poppins';
+    }
+</style>

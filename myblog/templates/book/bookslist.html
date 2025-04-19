@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'book/bookslist.css' %}">
+{% block title %} Books Post Page {% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mt-5 text-center">
+        <div class="col-lg-4" id="text-accueille">
+            <h3>MY FAVOURITE BOOKS</h3>
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-6" id="search-box">
+            <form action="{% url 'bookslist' %}" method="GET">
+                <input type="search" name="q" placeholder="Search your favourite book here...." value="{{ request.GET.q }}"><button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row mt-5">
+            {% for books in object_list %}
+                <div class="col-lg-2 col-sm-4 mb-5 text-center" id="card-book">
+                    <a href="{% url 'booksdetails' books.pk %}">
+                        <img src="{{ books.covert_page.url }}" class="card-img-top" alt="Image Description" style="width:150px; height:200px;">
+                        <br><br>
+                        <p class="card-title">{{ books.title }}</p>
+                        <p class="card-text">{{ books.author }}</p>
+                    </a>
+                </div>
+            {% empty %}
+                <div class="col-lg-12 text-center empty">
+                    <h4 class="error_message"><span><i class="fas fa-triangle-exclamation"></i></span> Désolé mais il n'ya Aucun Résultat...</h4>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br><br><br>
+
+
+    <!--section pagination-->
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="Première">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Précédente">
+                        Précédente
+                    </a>
+                </li>
+            {% endif %}
+    
+            <!-- Afficher les numéros de page -->
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+    
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Suivante">
+                        Suivante
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Dernière">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    
+    <br><br><br>
+</div>
+
+
+<style>
+    body{
+        background-color: #6b6f74;
+        color: white;
+    }
+    .empty span{
+        color: rgb(114, 114, 39);
+        font-size: 2rem;
+    }
+    .empty .error_message{
+        font-family: 'Poppins';
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    #card-book .card-text{
+        text-transform: capitalize;
+        font-family: 'Poppins';
+        color: white;
+    }
+    #card-book:hover{
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        transition: ease-in-out 0.5s;
+        padding-bottom: 10px;
+        color: white;
+    }
+    img{
+        filter: brightness(90%);
+    }
+    .card-title{
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #fff;
+    }
+    .card-text{
+        text-transform: uppercase;
+    }
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+    a:hover{
+        color:#000;
+    }
+    /* custom search place */
+    #search-box input{
+        width: 400px;
+        padding: 5px;
+        outline: none;
+        font-family: 'Poppins';
+    }
+    #search-box button{
+        padding: 5px;
+        background-color:#343a40;
+        color: #fff;
+        width: 50px;
+        border: none;
+        height: 40px;
+    }
+    #search-box ::placeholder{
+        font-family: 'Poppins';
+        letter-spacing: 2px;
+        border-radius: 5px;
+    }
+    #search-box button:hover{
+        background-color: #f7f7f7;
+        color: rgb(38, 40, 43);
+        border: 1px solid black;
+    }
+    #text-accueille{
+        letter-spacing: 1px;
+        font-weight: bold;
+        font-family: 'Montserrat';
+    }
+</style>
+
+
+{% endblock content %}
+
