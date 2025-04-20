@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 from decouple import config
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,8 +48,8 @@ INSTALLED_APPS = [
     'authapp',
     'books',
     'ckeditor',
-    #'cloudinary_storage',
     #'cloudinary',
+    #'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -147,16 +150,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 #cloud service multimedia
-
-#CLOUDINARY_STORAGE = {
- #   'CLOUD_NAME' : '', 
-  #  'API_KEY' : '',
-  #  'API_SECRET' : '',
-#}
+CLOUDINARY_STORAGE = {
+   'CLOUD_NAME' : 'ddmxp26nd', 
+    'API_KEY' : '594167971534457',
+   'API_SECRET' : '7zJ6Ct6vIZQREF-qIonEJYvsSqQ',
+}
 
 #Make cloudinary the default storage 
-
-#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage',
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Default primary key field type
