@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'authapp',
     'books',
     'ckeditor',
-    #'cloudinary',
-    #'cloudinary_storage',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
