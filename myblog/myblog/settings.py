@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'authapp',
     'books',
     'ckeditor',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -133,8 +135,14 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
+#Model user Customizer
 AUTH_USER_MODEL = "authapp.User"
 LOGIN_URL = '/authapp/login_user/'
 LOGIN_REDIRECT_URL = 'authapp/home/'  # Redirection après connexion
@@ -142,6 +150,17 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+#cloud service multimedia
+
+#CLOUDINARY_STORAGE = {
+ #   'CLOUD_NAME' : '', 
+  #  'API_KEY' : '',
+  #  'API_SECRET' : '',
+#}
+
+#Make cloudinary the default storage 
+
+#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage',
 
 
 # Default primary key field type
