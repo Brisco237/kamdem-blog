@@ -11,7 +11,7 @@ db.sqlite3
 
 # Dossiers Django spécifiques
 media/
-staticfiles/
+#staticfiles/
 
 # Fichiers système
 *.log
